@@ -16,15 +16,8 @@ namespace Gihan.Compiler
             Buffer = buffer;
         }
 
-        //public Tokenizer(Stream codeStream)
-        //{
-        //    Buffer = new Buffer(codeStream);
-        //}
-
-        //public Tokenizer(string codePath)
-        //{
-        //    Buffer = new Buffer(codePath);
-        //}
+        public bool IsTokeningCompleted
+            => Buffer.IsEndOfStream;
 
         public Token GetNextToken()
         {
@@ -91,6 +84,7 @@ namespace Gihan.Compiler
                 Key = preToken.Key,
                 Value = preToken.Key == TokenSet.WhiteSpace || preToken.Key == TokenSet.Comment ?
                     null : value,
+                File = Buffer.FileInfo.FullName,
                 Line = Buffer.Line,
                 Column = Buffer.Column,
             };

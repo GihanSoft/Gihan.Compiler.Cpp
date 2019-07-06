@@ -18,6 +18,7 @@ namespace Gihan.Compiler
 
         public int Line { get; private set; } = 1;
         public int Column { get; private set; } = 1;
+        public FileInfo FileInfo { get; set; }
 
         public bool IsEndOfStream =>
             string.IsNullOrEmpty(PendingBufferStr) &&
@@ -32,6 +33,12 @@ namespace Gihan.Compiler
             FillPendingBuffer();
             HeadStr = BufferStr.Substring(0, Math.Min(HeadStringSize, BufferStr.Length));
             BufferStr = BufferStr.Substring(HeadStr.Length);
+        }
+
+        public Buffer(FileStream codeFileStream, Encoding encoding)
+            : this(codeFileStream as Stream, encoding)
+        {
+            FileInfo = new FileInfo(codeFileStream.Name);
         }
 
         public Buffer(string codePath, Encoding encoding)
