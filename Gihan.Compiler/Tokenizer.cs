@@ -71,13 +71,21 @@ namespace Gihan.Compiler
             } while (true);
             var value = preToken.Match.Value;
             Buffer.Pop(value.Length % Buffer.HeadStringSize);
-            if (preToken.Key == "Id")
+            if (preToken.Key == TokenSet.Id)
             {
                 var symbolPair = SymbolTable.Global.Symbols.FirstOrDefault(p => p.Value.Value == value);
                 if (symbolPair.Value != null)
                     value = symbolPair.Key.ToString();
                 else
                     value = SymbolTable.Global.AddSymbol(value).ToString();
+            }
+            if (preToken.Key == TokenSet.KeyWord)
+            {
+                var symbolPair = SymbolTable.Global.Symbols.FirstOrDefault(p => p.Value.Value == value);
+                if (symbolPair.Value != null)
+                    value = symbolPair.Key.ToString();
+                else
+                    throw new Exceptions.SyntaxException("syntax is not defined");
             }
             return new Token()
             {

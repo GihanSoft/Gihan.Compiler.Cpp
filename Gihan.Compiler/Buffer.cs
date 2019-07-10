@@ -44,12 +44,12 @@ namespace Gihan.Compiler
         public Buffer(string codePath, Encoding encoding)
             : this(new FileStream(codePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), encoding) { }
 
-        private async void FillPendingBuffer()
+        private void FillPendingBuffer()
         {
             var readLength = (int)Math.Min(BufferStringSize, 
                 CodeStreamReader.BaseStream.Length - CodeStreamReader.BaseStream.Position);
             var buffer = new char[readLength];
-            await CodeStreamReader.ReadAsync(buffer, 0, readLength);
+            CodeStreamReader.Read(buffer, 0, readLength);
             PendingBufferStr = new string(buffer);
         }
 

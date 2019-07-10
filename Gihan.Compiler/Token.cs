@@ -15,6 +15,10 @@ namespace Gihan.Compiler
 
         public override string ToString()
         {
+#if DEBUG
+            if (Key == TokenSet.Id || Key == TokenSet.KeyWord)
+                return $"<{Key}, {Value}>  ({SymbolTable.Global.GetSymbol(this).Value})";
+#endif
             return Value is null ? $"<{Key}>" : $"<{Key}, {Value}>";
         }
     }

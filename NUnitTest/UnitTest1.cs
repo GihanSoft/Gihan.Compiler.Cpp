@@ -18,31 +18,35 @@ namespace Tests
         {
 
 
-            var code = @"char * a = ""hard \
-coded"";
-int main(){
-    a = ""some other text"";
-}
-            ";
-            var memoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(code));
-            var buffer = new Buffer(memoryStream, System.Text.Encoding.UTF8);
-            var tokenizer = new Tokenizer(buffer);
-            var tokens = new List<Token>();
-            var table = SymbolTable.Global.Symbols;
+            //            var code = @"char * a = ""hard \
+            //coded"";
+            //int main(){
+            //    a = ""some other text"";
+            //}
+            //            ";
+            //            var memoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(code));
+            //var buffer = new Buffer("D:\\WorkSpace\\test\\main.cpp", System.Text.Encoding.ASCII);
+            //var tokenizer = new Tokenizer(buffer);
+            //var tokens = new List<Token>();
+            //var table = SymbolTable.Global.Symbols;
 
-            Token token;
-            while ((token = tokenizer.GetNextToken()) != null)
-            {
-                tokens.Add(token);
-            }
+            //Token token;
+            //while ((token = tokenizer.GetNextToken()) != null)
+            //{
+            //    tokens.Add(token);
+            //}
 
-            var file = File.Open(@"D:\tokenStream.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
-            var writter = new StreamWriter(file);
-            foreach (var _token in tokens)
-            {
-                writter.WriteLine(_token + (_token.Key == TokenSet.Id ? table[ulong.Parse(_token.Value)].Value : ""));
-            }
-            writter.Dispose();
+            //var file = File.Open(@"D:\tokenStream.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+            //var writter = new StreamWriter(file);
+            //foreach (var _token in tokens)
+            //{
+            //    writter.WriteLine(_token + (_token.Key == TokenSet.Id ? table[ulong.Parse(_token.Value)].Value : ""));
+            //}
+            //writter.Dispose();
+
+            var compiler = new Compiler((new FileInfo(@"D:\WorkSpace\test\main.cpp"), System.Text.Encoding.ASCII));
+            compiler.Run();
+
         }
     }
 }
