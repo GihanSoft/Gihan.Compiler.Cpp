@@ -85,7 +85,7 @@ namespace Gihan.Compiler
                 if (symbolPair.Value != null)
                     value = symbolPair.Key.ToString();
                 else
-                    throw new Exceptions.SyntaxException("syntax is not defined");
+                    throw new Exceptions.SyntaxException(null, "syntax is not defined");
             }
             return new Token()
             {

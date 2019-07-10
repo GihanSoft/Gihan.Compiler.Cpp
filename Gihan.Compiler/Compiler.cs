@@ -30,7 +30,11 @@ namespace Gihan.Compiler
                     {
                         while (tokenStream.IsBufferFull)
                             Thread.Sleep(100);
-                        tokenStream.Write(tokenizer.GetNextToken());
+                        try
+                        {
+                            tokenStream.Write(tokenizer.GetNextToken());
+                        }
+                        catch { }
                     }
                     tokenStream.Ended = true;
                     while (!tokenStream.IsBufferEmpty)
@@ -41,7 +45,13 @@ namespace Gihan.Compiler
                 Task.Run(() =>
                 {
                     parser = new Parser(tokenStream);
-                    parser.Run();
+                    try
+                    {
+                        parser.Run();
+                    }
+                    catch {
+                        parser = null;
+                    }
                 });
 
                 while (parser is null || !parser.IsRunning)

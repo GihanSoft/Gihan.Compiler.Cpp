@@ -25,7 +25,7 @@ namespace Gihan.Compiler
             else
                 tokenVal = SymbolTable.Global.GetSymbol(token).Value;
             if (value != tokenVal)
-                throw new Exceptions.SyntaxException(tokenVal);
+                throw new Exceptions.SyntaxException(token, "Excepted " + value);
         }
 
 
@@ -33,7 +33,7 @@ namespace Gihan.Compiler
         {
             var token = TokenStream.Read();
             if (token.Key != type)
-                throw new Exceptions.SyntaxException(Head().Value);
+                throw new Exceptions.SyntaxException(Head(), "Excepted type " + type);
         }
 
         public bool NameSpaceName()
@@ -64,7 +64,7 @@ namespace Gihan.Compiler
                 var hasInnerNameSpace = NameSpaceName();
                 if (!hasInnerNameSpace)
                 {
-                    throw new Exceptions.SyntaxException();
+                    throw new Exceptions.SyntaxException(Head(), "Excepted NameSpace");
                 }
 
                 Match(";");
@@ -91,7 +91,7 @@ namespace Gihan.Compiler
                     if (Head().Value == "(")
                     {
                         if (isArr)
-                            throw new Exceptions.SyntaxException();
+                            throw new Exceptions.SyntaxException(Head(), "Excepted Function Name");
                         Match("(");
                         Arguments();
                         Match(")");
@@ -195,20 +195,20 @@ namespace Gihan.Compiler
                 return false;
             }
             if (Head().Key != TokenSet.KeyWord)
-                throw new Exceptions.SyntaxException();
+                throw new Exceptions.SyntaxException(Head(), "Excepted KeyWord");
             var symbol = SymbolTable.Global.GetSymbol(Head());
             var keywordTypes = new[] {"signed", "unsigned", "short", "long",
                                       "char", "int", "float", "double", "bool",
                                       "void" };
             if (!keywordTypes.Contains(symbol.Value))
-                throw new Exceptions.SyntaxException();
+                throw new Exceptions.SyntaxException(Head(), "Excepted Keyword Type");
             if (symbol.Value == "signed" || symbol.Value == "unsigned")
             {
                 Match(symbol.Value);
                 symbol = SymbolTable.Global.GetSymbol(Head());
                 var signAllowed = new[] { "char", "short", "int", "long" };
                 if (!signAllowed.Contains(symbol.Value))
-                    throw new Exceptions.SyntaxException(Head().Value);
+                    throw new Exceptions.SyntaxException(Head(), "Excepted char | short | int | long");
             }
             if (symbol.Value == "short")
             {
@@ -338,7 +338,7 @@ namespace Gihan.Compiler
                 Type();
                 var isArr = Name();
                 if (isArr)
-                    throw new Exceptions.SyntaxException();
+                    throw new Exceptions.SyntaxException(Head(), "Array Argumant not supported");
 
             }
         }
@@ -664,7 +664,7 @@ namespace Gihan.Compiler
                     return;
                 }
                 else
-                    throw new Exceptions.SyntaxException();
+                    throw new Exceptions.SyntaxException(Head());
             }
             if (Head().Value == "++" || Head().Value == "--")
             {
@@ -712,7 +712,7 @@ namespace Gihan.Compiler
                         }
                         if (!assignAllowOps.Contains(Head().Value))
                         {
-                            throw new Exceptions.SyntaxException();
+                            throw new Exceptions.SyntaxException(Head(), "Excepted Assign");
                         }
                         Match(Head().Value);
                         Expr();
@@ -820,7 +820,7 @@ namespace Gihan.Compiler
                         Match(";");
                         return;
                     }
-                    throw new Exceptions.SyntaxException();
+                    throw new Exceptions.SyntaxException(Head(), "No match for code");
             }
         }
 
@@ -880,7 +880,7 @@ namespace Gihan.Compiler
                     if (Head().Value == "(")
                     {
                         if (isArr)
-                            throw new Exceptions.SyntaxException();
+                            throw new Exceptions.SyntaxException(Head(), "Excepet Function Name");
                         Match("(");
                         Arguments();
                         Match(")");

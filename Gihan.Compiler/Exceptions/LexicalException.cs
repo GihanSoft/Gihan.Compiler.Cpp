@@ -13,6 +13,9 @@ namespace Gihan.Compiler.Exceptions
 
         public LexicalException(string message) : base(message)
         {
+            Console.WriteLine();
+            Console.WriteLine(message);
+            Console.WriteLine();
         }
 
         public LexicalException(string message, Exception innerException) : base(message, innerException)

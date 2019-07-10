@@ -7,8 +7,15 @@ namespace Gihan.Compiler.Cli
     {
         static void Main(string[] args)
         {
-            var compiler = new Compiler((new FileInfo(@"D:\WorkSpace\test\main.cpp"), System.Text.Encoding.ASCII));
-            compiler.Run();
+            try
+            {
+                var compiler = new Compiler((new FileInfo(@"D:\WorkSpace\test\test.cpp"), System.Text.Encoding.ASCII));
+                compiler.Run();
+            }
+            catch
+            {
+
+            }
         }
     }
 }
