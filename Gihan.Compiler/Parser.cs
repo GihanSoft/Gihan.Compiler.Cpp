@@ -195,7 +195,7 @@ namespace Gihan.Compiler
                 return false;
             }
             if (Head().Key != TokenSet.KeyWord)
-                throw new Exceptions.SyntaxException(Head(), "Excepted KeyWord");
+                throw new Exceptions.SyntaxException(Head(), "Excepted KeyWord or Id");
             var symbol = SymbolTable.Global.GetSymbol(Head());
             var keywordTypes = new[] {"signed", "unsigned", "short", "long",
                                       "char", "int", "float", "double", "bool",
@@ -337,8 +337,8 @@ namespace Gihan.Compiler
 
                 Type();
                 var isArr = Name();
-                if (isArr)
-                    throw new Exceptions.SyntaxException(Head(), "Array Argumant not supported");
+                //if (isArr)
+                //    throw new Exceptions.SyntaxException(Head(), "Array Argumant not supported");
 
             }
         }

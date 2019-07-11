@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace Gihan.Compiler.Cli
 {
@@ -9,7 +11,7 @@ namespace Gihan.Compiler.Cli
         {
             try
             {
-                var compiler = new Compiler((new FileInfo(@"D:\WorkSpace\test\test.cpp"), System.Text.Encoding.ASCII));
+                var compiler = new Compiler(args.Select(a=>(new FileInfo(a), Encoding.ASCII)));
                 compiler.Run();
             }
             catch

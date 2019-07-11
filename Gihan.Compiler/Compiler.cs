@@ -12,6 +12,11 @@ namespace Gihan.Compiler
     {
         private (FileInfo file, Encoding encoding)[] Files { get; set; }
 
+        public Compiler(IEnumerable<(FileInfo file, Encoding encoding)> files)
+        {
+            Files = files.ToArray();
+        }
+
         public Compiler(params (FileInfo file, Encoding encoding)[] files)
         {
             Files = files.ToArray();
